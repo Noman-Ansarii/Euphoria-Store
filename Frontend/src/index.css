@@ -1,0 +1,714 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --nav-icon: #807d7e;
+  --color: #f6f6f6;
+  --line: #8a33fd;
+  --line-hover: #57219c;
+  --text-color: #3c4242;
+  --yellow: rgb(255, 208, 0);
+  --white: #fff;
+  --Brand: #3c4242;
+  --footer: #2a2f2f;
+  --ce: #666666;
+  --light-Black: #212121;
+  --dark-green: #3C4242;
+  --dn: #BEBCBD;
+  --PriceCart: #F3F3F3;
+}
+
+.min-w-\[200px\] {
+  min-width: 80px !important;
+}
+
+.box {
+  background-color: var(--color);
+}
+
+.search {
+  background: var(--color);
+}
+
+.Shop-ICONS .icons {
+  background: var(--color);
+}
+
+.group {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
+
+.input::placeholder {
+  color: #9e9ea7;
+}
+
+.input:focus,
+input:hover {
+  outline: none;
+  border-color: var(--color);
+  background-color: #fff;
+}
+
+.icon {
+  position: absolute;
+  left: 1rem;
+  fill: #9e9ea7;
+  width: 1rem;
+  height: 1rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  font-weight: 900;
+}
+
+.line {
+  border-left: 8px solid var(--line);
+}
+
+.sliderdesc {
+  color: var(--text-color);
+}
+
+/* featured */
+
+.featured__item:hover .featured__item__pic .featured__item__pic__hover {
+  bottom: 20px;
+}
+
+.featured__item__pic {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured__item__pic__hover {
+  position: absolute;
+  left: 0;
+  bottom: -1200px;
+  width: 100%;
+  text-align: center;
+  -webkit-transition: all, 0.6s;
+  -moz-transition: all, 0.6s;
+  -ms-transition: all, 0.6s;
+  -o-transition: all, 0.6s;
+  transition: all, 0.6s;
+}
+
+.featured__item__pic__hover li:hover a {
+  background: var(--nav-icon);
+  border-color: white;
+}
+
+.Popup {
+  color: var(--Brand);
+}
+
+.Popup:hover {
+  background: var(--Brand);
+  color: var(--yellow);
+}
+
+.text-span {
+  background: var(--yellow);
+}
+
+/* .containerFav input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.containerFav {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  transition: 100ms;
+}
+
+.checkmark {
+  top: 0;
+  left: 0;
+  height: 2em;
+  width: 2em;
+  transition: 100ms;
+  animation: dislike_effect 400ms ease;
+}
+
+.containerFav input:checked ~ .checkmark path {
+  fill: #FF5353;
+  stroke-width: 0;
+}
+
+.containerFav input:checked ~ .checkmark {
+  animation: like_effect 400ms ease;
+}
+
+.containerFav:hover {
+  transform: scale(1.1);
+}
+
+@keyframes like_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dislike_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+} */
+
+.containerFav {
+  background-color: var(--yellow) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 10px 15px 10px 10px;
+  cursor: pointer;
+  user-select: none !important;
+  border-radius: 10px !important;
+  box-shadow: rgba(49, 49, 49, 0.226) 0px 8px 24px !important;
+  color: var(--Brand) !important;
+  font-weight: 700 !important;
+}
+
+#favorite {
+  display: none !important;
+}
+
+#favorite:checked + .containerFav svg {
+  fill: hsl(0deg 100% 50%) !important;
+  stroke: hsl(0deg 100% 50%) !important;
+  animation: heartButton 1s !important;
+}
+
+@keyframes heartButton {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+#favorite + .containerFav .action {
+  position: relative !important;
+  overflow: hidden !important;
+  display: grid !important;
+}
+
+#favorite + .containerFav .action span {
+  grid-column-start: 1 !important;
+  grid-column-end: 1 !important;
+  grid-row-start: 1 !important;
+  grid-row-end: 1 !important;
+  transition: all 0.5s !important;
+}
+
+#favorite + .containerFav .action span.option-1 {
+  transform: translate(0px, 0%) !important;
+  opacity: 1 !important;
+}
+
+#favorite:checked + .containerFav .action span.option-1 {
+  transform: translate(0px, -100%) !important;
+  opacity: 0 !important;
+}
+
+#favorite + .containerFav .action span.option-2 {
+  transform: translate(0px, 100%) !important;
+  opacity: 0 !important;
+}
+
+#favorite:checked + .containerFav .action span.option-2 {
+  transform: translate(0px, 0%) !important;
+  opacity: 1 !important;
+}
+
+.CartBtn {
+  width: 140px;
+  height: 40px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.5s;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+}
+
+.IconContainer {
+  position: absolute;
+  left: -50px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: 0.5s;
+}
+
+.iconic {
+  border-radius: 1px;
+}
+
+.text {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(17, 17, 17);
+  z-index: 1;
+  transition-duration: 0.5s;
+  font-size: 1.04em;
+  font-weight: 600;
+}
+
+.CartBtn:hover .IconContainer {
+  transform: translateX(58px);
+  border-radius: 40px;
+  transition-duration: 0.5s;
+}
+
+.CartBtn:hover .text {
+  transform: translate(10px, 0px);
+  transition-duration: 0.5s;
+}
+
+.CartBtn:active {
+  transform: scale(0.95);
+  transition-duration: 0.5s;
+}
+
+/* GridCard */
+
+.GridCard {
+  color: var(--white);
+}
+
+.GridCard h1 {
+  color: var(--text-color);
+}
+
+.gridcontainer {
+  color: var(--text-color);
+}
+
+.gridcontainer a {
+  border-color: var(--text-color);
+}
+
+.decofcard {
+  color: var(--white);
+}
+
+.brand {
+  background: var(--Brand);
+  color: var(--white);
+  text-align: center;
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 190px;
+  height: 90px;
+  background: var(--white);
+  border-radius: 20px;
+}
+
+.Price {
+  background: var(--color);
+}
+
+.Footer {
+  background: var(--color);
+  color: var(--footer);
+}
+
+/* Login */
+
+.mainButtonCSS {
+  background: var(--line);
+  color: var(--white);
+  border: 1px solid var(--line);
+}
+
+.mainButtonCSS:hover {
+  border: 1px solid var(--line);
+  background: var(--line-hover);
+  transition: all 0.2s;
+}
+
+.resend {
+  color: var(--line);
+}
+
+.CheckEmail > h6,
+p {
+  color: var(--ce);
+}
+
+.label {
+  position: relative;
+  display: block;
+  display: flex;
+  border-radius: 6px;
+  border: 2px solid #373737;
+  text-align: left;
+
+  .iconSVG {
+    position: absolute;
+    top: 53%;
+    right: 0;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    color: #c5c5c5;
+  }
+
+  .input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+}
+
+.buttonU {
+  background: var(--yellow) !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  display: inline-block !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  width: 120px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transform: skew(-21deg) !important;
+  font-weight: 700;
+}
+
+.spanU {
+  display: inline-block !important;
+  transform: skew(21deg) !important;
+}
+
+.buttonU::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 100% !important;
+  left: 0 !important;
+  background: var(--white) !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+  transition: all 0.5s !important;
+}
+
+.buttonU:hover {
+  color: var(--Brand) !important;
+}
+
+.buttonU:hover::before {
+  left: 0 !important;
+  right: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Mainbutton */
+.Mainbutton {
+  background: var(--white) !important;
+  color: var(--light-Black);
+  border: none !important;
+  display: inline-block !important;
+  font-size: 15px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transform: skew(-21deg) !important;
+}
+
+.Mainspan {
+  display: inline-block !important;
+  transform: skew(21deg) !important;
+}
+
+.Mainbutton::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 100% !important;
+  left: 0 !important;
+  background: var(--light-Black) !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+  transition: all 0.5s !important;
+}
+
+.Mainbutton:hover {
+  color: var(--white) !important;
+}
+
+.Mainbutton:hover::before {
+  left: 0 !important;
+  right: 0 !important;
+  opacity: 1 !important;
+}
+
+.GridButton:hover{
+  background: var(--light-Black);
+  color: var(--white);
+  transition: all 0.5s;
+}
+
+.OfferPColor{
+  color: var(--white);
+}
+
+th{
+  background: var(--dark-green) !important;
+  color: var(--white) !important;
+}
+
+.shipping{
+  color: var(--dn) !important;
+}
+
+.Trash2{
+  color: var(--line);
+}
+
+.PriceCart{
+  background: var(--PriceCart);
+}
+
+/* Loader.css */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  z-index: 9999;
+}
+
+
+.containerLast input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.containerLast {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  transition: 100ms;
+}
+
+.checkmark {
+  top: 0;
+  left: 0;
+  height: 2em;
+  width: 2em;
+  transition: 100ms;
+  animation: dislike_effect 400ms ease;
+}
+
+.containerLast input:checked ~ .checkmark path {
+  fill: #FF5353;
+  stroke-width: 0;
+}
+
+.containerLast input:checked ~ .checkmark {
+  animation: like_effect 400ms ease;
+}
+
+.containerLast:hover {
+  transform: scale(1.1);
+}
+
+@keyframes like_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dislike_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.CartEmptyContainer{
+  background: var(--color);
+}
