@@ -109,10 +109,10 @@ function Profile({ Alerts, setLoading }) {
 
       // Clear token from local storage after successful deletion
       localStorage.removeItem("AuthenticationToken");
-      alert("Account deleted successfully");
+      Alerts("Account deleted successfully");
       navigate("/login");
     } catch (error) {
-      alert("Error deleting account", error);
+      Alerts("Error deleting account", error);
     }
   };
 

@@ -1,113 +1,93 @@
-import React from "react";
-import LimeCart1 from "../media/Cate/1.png";
-import LimeCart2 from "../media/Cate/2.png";
-import LimeCart3 from "../media/Cate/3.png";
-import LimeCart4 from "../media/Cate/4.png";
+import { useWishlist } from "@/context/WishlistContext";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const LimeCart = [
-    {
-        src: LimeCart1,
-        desc: "line Pattern Black H...",
-        about: "AS’s  Brand",
-        Price: "123$",
-    },
-    {
-        src: LimeCart2,
-        desc: "Black Shorts",
-        about: "MM’s  Brand",
-        Price: "89.99$",
-    },
-    {
-        src: LimeCart3,
-        desc: "Levender Hoodie with ....",
-        about: "Nike’s  Brand",
-        Price: "99$",
-    },
-    {
-        src: LimeCart4,
-        desc: "Black Sweatshirt with ....",
-        about: "Jhanvi’s  Brand",
-        Price: "119$",
-    },
-];
-
 function LimeCate() {
-    return (
-        <>
-            <div className="container">
-                <div className="heading flex my-20">
-                    <span className="line rounded-xl mr-3"></span>
-                    <h1 className="text-2xl sm:text-5xl font-medium">In The Limelight</h1>
+  const HOST = import.meta.env.VITE_BACKEND_HOST;
+
+  const [limeCartProduct, setLimeCartProduct] = useState([]);
+  const { addToWishlist, removeFromWishlist } = useWishlist();
+
+  useEffect(() => {
+    const fetchLimeCartProducts = async () => {
+      try {
+        const response = await axios.get(`${HOST}/api/v2/product/limeCart`);
+        setLimeCartProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching Men products", error);
+      }
+    };
+
+    fetchLimeCartProducts();
+  }, []); // Empty dependency array to run once on component mount
+
+  const handleCheckboxChange = (e, item) => {
+    if (e.target.checked) {
+      addToWishlist(item); // Call addToWishlist from context
+    } else {
+      removeFromWishlist(item._id); // Call removeFromWishlist from context
+    }
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="heading flex my-20">
+          <span className="line rounded-xl mr-3"></span>
+          <h1 className="text-2xl sm:text-5xl font-medium">In The Limelight</h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {limeCartProduct.map((cate, i) => (
+            <div
+              key={i}
+              className="w-full h-full bg-white rounded-lg shadow-md"
+            >
+              <div className="relative">
+                <img
+                  src={cate.imageSrc}
+                  className="h-96 w-full rounded-t-lg object-cover"
+                />
+                <div className="absolute top-4 right-4">
+                  <label className="containerLastForOtherProducts">
+                    <input
+                      type="checkbox"
+                      onChange={(e) => handleCheckboxChange(e, cate)}
+                    />
+                    <div className="checkmark">
+                      <svg viewBox="0 0 256 256">
+                        <rect fill="none" height="256" width="256"></rect>
+                        <path
+                          d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                          strokeWidth="20px"
+                          stroke="#FFF"
+                          fill="none"
+                        ></path>
+                      </svg>
+                    </div>
+                  </label>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {LimeCart.map((cate, i) => (
-                        <div key={i} className="w-full h-full bg-white rounded-lg shadow-md">
-                            <div className="relative">
-                                <img
-                                    src={cate.src}
-                                    className="h-96 w-full rounded-t-lg object-cover"
-                                />
-                                <div className="absolute top-4 right-4">
-                                    <div className="heart-container" title="Like">
-                                        <input
-                                            type="checkbox"
-                                            className="checkbox"
-                                            id="Give-It-An-Id"
-                                        />
-                                        <div className="svg-container">
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                className="svg-outline"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
-                                            </svg>
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                className="svg-filled"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
-                                            </svg>
-                                            <svg
-                                                className="svg-celebrate"
-                                                width="100"
-                                                height="100"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <polygon points="10,10 20,20"></polygon>
-                                                <polygon points="10,50 20,50"></polygon>
-                                                <polygon points="20,80 30,70"></polygon>
-                                                <polygon points="90,10 80,20"></polygon>
-                                                <polygon points="90,50 80,50"></polygon>
-                                                <polygon points="80,80 70,70"></polygon>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-4 flex justify-between items-center">
-                                <div className="okay">
-                                    <h1 className="text-sm md:text-base font-semibold">
-                                        {cate.desc}
-                                    </h1>
-                                    <p className="text-sm text-gray-600">{cate.about}</p>
-                                </div>
-                                <Link
-                                    to="/"
-                                    className="Price rounded-lg px-2.5 py-1 text-base font-semibold"
-                                >
-                                    {cate.Price}
-                                
-</Link>
-                            </div>
-                        </div>
-                    ))}
+              </div>
+              <div className="p-4 flex justify-between items-center">
+                <div className="okay">
+                  <h1 className="text-sm md:text-base font-semibold">
+                    {cate.description}
+                  </h1>
+                  <p className="text-sm text-gray-600">{cate.about}</p>
                 </div>
+                <Link
+                  to="/"
+                  className="Price rounded-lg px-2.5 py-1 text-base font-semibold"
+                >
+                  ${cate.Price}
+                </Link>
+              </div>
             </div>
-        </>
-    );
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default LimeCate;

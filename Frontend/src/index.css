@@ -85,15 +85,18 @@
   --line: #8a33fd;
   --line-hover: #57219c;
   --text-color: #3c4242;
-  --yellow: rgb(255, 208, 0);
   --white: #fff;
   --Brand: #3c4242;
-  --footer: #2a2f2f;
+  --footer: #3C4242;
   --ce: #666666;
   --light-Black: #212121;
   --dark-green: #3C4242;
   --dn: #BEBCBD;
   --PriceCart: #F3F3F3;
+}
+
+hr{
+  color: var(--dn);
 }
 
 .min-w-\[200px\] {
@@ -201,11 +204,11 @@ input:hover {
 
 .Popup:hover {
   background: var(--Brand);
-  color: var(--yellow);
+  color: var(--line);
 }
 
 .text-span {
-  background: var(--yellow);
+  background: var(--line);
 }
 
 /* .containerFav input {
@@ -276,7 +279,7 @@ input:hover {
 } */
 
 .containerFav {
-  background-color: var(--yellow) !important;
+  background-color: var(--line) !important;
   display: flex !important;
   align-items: center !important;
   gap: 14px !important;
@@ -360,7 +363,7 @@ input:hover {
   height: 40px;
   border-radius: 12px;
   border: none;
-  background-color: var(--yellow);
+  background-color: var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,7 +400,6 @@ input:hover {
   align-items: center;
   justify-content: center;
   color: rgb(17, 17, 17);
-  z-index: 1;
   transition-duration: 0.5s;
   font-size: 1.04em;
   font-weight: 600;
@@ -448,7 +450,7 @@ input:hover {
 }
 
 .yellow {
-  color: var(--yellow);
+  color: var(--line);
 }
 
 .box {
@@ -466,8 +468,8 @@ input:hover {
 }
 
 .Footer {
-  background: var(--color);
-  color: var(--footer);
+  background: var(--footer);
+  color: var(--color);
 }
 
 /* Login */
@@ -519,7 +521,7 @@ p {
 }
 
 .buttonU {
-  background: var(--yellow) !important;
+  background: var(--line) !important;
   border: none !important;
   padding: 10px 20px !important;
   display: inline-block !important;
@@ -530,6 +532,7 @@ p {
   cursor: pointer !important;
   transform: skew(-21deg) !important;
   font-weight: 700;
+  color: white;
 }
 
 .spanU {
@@ -544,20 +547,25 @@ p {
   bottom: 0 !important;
   right: 100% !important;
   left: 0 !important;
-  background: var(--white) !important;
+  background: var(--line-hover) !important;
   opacity: 0 !important;
   z-index: -1 !important;
   transition: all 0.5s !important;
 }
 
 .buttonU:hover {
-  color: var(--Brand) !important;
+  color: var(--white) !important;
 }
 
 .buttonU:hover::before {
   left: 0 !important;
   right: 0 !important;
   opacity: 1 !important;
+}
+
+.headings{
+  background: var(--footer);
+  color: var(--PriceCart);
 }
 
 /* Mainbutton */
@@ -586,7 +594,7 @@ p {
   left: 0 !important;
   background: var(--light-Black) !important;
   opacity: 0 !important;
-  z-index: -1 !important;
+  z-index: -1;
   transition: all 0.5s !important;
 }
 
@@ -634,10 +642,10 @@ th{
   left: 0;
   width: 100%;
   height: 100%;
+  background: var(--white);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--white);
   z-index: 9999;
 }
 
@@ -709,6 +717,129 @@ th{
   }
 }
 
+/* containerLastForOtherProducts */
+.containerLastForOtherProducts input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.containerLastForOtherProducts {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  transition: 100ms;
+}
+
+.checkmark {
+  top: 0;
+  left: 0;
+  height: 2em;
+  width: 2em;
+  transition: 100ms;
+  animation: dislike_effect 400ms ease;
+}
+
+.containerLastForOtherProducts input:checked ~ .checkmark path {
+  fill: #FF5353;
+  stroke-width: 0;
+}
+
+.containerLastForOtherProducts input:checked ~ .checkmark {
+  animation: like_effect 400ms ease;
+}
+
+.containerLastForOtherProducts:hover {
+  transform: scale(1.1);
+}
+
+@keyframes like_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dislike_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .CartEmptyContainer{
   background: var(--color);
+}
+
+/* CART */
+.theme-switch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+  background-color: var(--line);
+  padding: 0.5em;
+  transition: .4s;
+  z-index: 1;
+}
+
+.name::before {
+  color: var(--white);
+  content: "Add to Cart";
+  transition: .2s ease-in-out;
+}
+
+.name::after {
+  color: white;
+  content: "Remove from Cart";
+  transition: .2s ease-in-out;
+  display: none;
+}
+
+.theme-switch .slider {
+  position: absolute;
+}
+
+.theme-switch:hover {
+  color: white;
+  cursor: pointer;
+  box-shadow: none;
+  border: none;
+}
+
+.theme-switch input[type=checkbox]:checked ~ .name::before {
+  display: none;
+}
+
+.theme-switch input[type=checkbox]:checked ~ .name::after {
+  display: block;
+}
+
+.theme-switch input[type=checkbox] {
+  position: absolute;
+  visibility: hidden;
+}
+
+.slider {
+  transition: 300ms ease;
 }

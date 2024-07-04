@@ -1,11 +1,13 @@
+// app.js or index.js
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import router from './Routes/user.routes.js';
-import adminRouter from './Routes/admin.route.js'; // Ensure you have this file
+import userRouter from './Routes/user.routes.js';
+import mongodbIndex from './Database/index.DB.js';
+import ProductRoute from './Routes/product.routes.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = 3000 || process.env.PORT;
 
 /*---------------------
   CORS & Middleware
@@ -19,13 +21,13 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-app.use('/api/v1/user', router);
-app.use('/api/v8/admin', adminRouter);
+
+app.use('/api/v1/user', userRouter);
+app.use('/api/v2/product', ProductRoute);
 
 /*---------------------
   Database
 -----------------------*/
-import mongodbIndex from './Database/index.DB.js';
 mongodbIndex();
 
 /*---------------------

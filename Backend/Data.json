@@ -1,0 +1,134 @@
+{
+  "SliderProduct": [
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719944723/22663_a5ptwn.jpg",
+      "description": "Knitted Joggers",
+      "Price": "19.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719944724/2148951006_kuvz8q.jpg",
+      "description": "Urban Shirts",
+      "Price": "49.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639437/3_ghtsum.png",
+      "description": "Active T-Shirts",
+      "Price": "39.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719944831/2151005704_fzoocs.jpg",
+      "description": "Nike Golden Shoes",
+      "Price": "199.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639437/2_yr90ld.png",
+      "description": "Knitted Joggers",
+      "Price": "59.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639438/4_ffezlh.png",
+      "description": "Urban Shirts",
+      "Price": "89.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719944724/29035_azbruf.jpg",
+      "description": "Active T-Shirts",
+      "Price": "79.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639437/1_saiybo.png",
+      "description": "Full Sleeve",
+      "Price": "69.99"
+    }
+  ],
+  "MenProducts": [
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639573/1_gx20ep.png",
+      "description": "Shirts",
+      "Price": "19.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639575/2_wciniu.png",
+      "description": "Hoodies & Sweetshirt",
+      "Price": "29.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639574/3_mo4mag.png",
+      "description": "Printed T-Shirts",
+      "Price": "39.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639575/4_e93yws.png",
+      "description": "Jeans",
+      "Price": "49.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639581/5_dbqii8.png",
+      "description": "Activewear",
+      "Price": "59.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639585/6_jps2lf.png",
+      "description": "Boxers",
+      "Price": "69.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639587/7_jlxz21.png",
+      "description": "Polo T-Shirt",
+      "Price": "79.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639591/8_ctk3qb.png",
+      "description": "Plain T-Shirt",
+      "Price": "89.99"
+    }
+  ],
+  "WomenProducts": [
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639604/1_qqwfji.png",
+      "description": "Boxers",
+      "Price": "14.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639605/2_romdhn.png",
+      "description": "Hoodies & Sweetshirt",
+      "Price": "24.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639609/3_m44lad.png",
+      "description": "Coats & Parkas",
+      "Price": "34.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639613/4_eqdcap.png",
+      "description": "Tees & T-Shirt",
+      "Price": "44.99"
+    }
+  ],
+  "LimeCart": [
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639554/1_uxjb1d.png",
+      "description": "line Pattern Black H...",
+      "about": "AS’s  Brand",
+      "Price": "123"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639555/2_tv5ubr.png",
+      "description": "Black Shorts",
+      "about": "MM’s  Brand",
+      "Price": "89.99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639555/3_gsel5y.png",
+      "description": "Levender Hoodie with ....",
+      "about": "Nike’s  Brand",
+      "Price": "99"
+    },
+    {
+      "imageSrc": "https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639559/4_relt8o.png",
+      "description": "Black Sweatshirt with ....",
+      "about": "Jhanvi’s  Brand",
+      "Price": "119"
+    }
+  ]
+}

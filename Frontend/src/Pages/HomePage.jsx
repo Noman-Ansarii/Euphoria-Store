@@ -23,7 +23,7 @@ function HomePage() {
           <div className="relative text-white">
             <div className="image h-[85vh]">
               <img
-                src={IMG}
+                src="https://res.cloudinary.com/dvo26dhuq/image/upload/v1719639419/shop-hero-1-product-slide-1_stqmq4.jpg"
                 alt="image 1"
                 className="h-full w-full object-cover"
               />

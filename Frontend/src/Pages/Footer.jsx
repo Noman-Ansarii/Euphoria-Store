@@ -14,7 +14,7 @@ function Footer() {
         <div className="-m-6 grid grid-cols-2 md:grid-cols-4">
           <div className="w-full p-6">
             <div className="h-full">
-              <h3 className="tracking-px mb-9 text-base md:text-lg font-semibold uppercase text-gray-500">
+              <h3 className="tracking-px mb-9 text-base md:text-lg font-bold uppercase">
                 Need Help
               </h3>
               <ul>
@@ -48,7 +48,7 @@ function Footer() {
           </div>
           <div className="w-full p-6">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-base md:text-lg font-semibold uppercase text-gray-500">
+              <h3 className="tracking-px mb-9 text-base md:text-lg font-bold uppercase">
                 Compnay
               </h3>
               <ul>
@@ -77,7 +77,7 @@ function Footer() {
           </div>
           <div className="w-full p-6">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-base md:text-lg font-semibold uppercase text-gray-500">
+              <h3 className="tracking-px mb-9 text-base md:text-lg font-bold uppercase">
                 Legals
               </h3>
               <ul>
@@ -101,7 +101,7 @@ function Footer() {
           </div>
           <div className="w-full p-6">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-base md:text-lg font-semibold uppercase text-gray-500">
+              <h3 className="tracking-px mb-9 text-base md:text-lg font-bold uppercase">
                 Location
               </h3>
               <ul>
@@ -127,7 +127,7 @@ function Footer() {
             <AccordionContent>
               <div className="w-full p-6">
                 <div className="h-full">
-                  <h3 className="tracking-px mb-9  text-base md:text-lg font-semibold uppercase text-gray-500">
+                  <h3 className="tracking-px mb-9 text-base md:text-lg font-bold uppercase">
                     Categories
                   </h3>
                   <ul>

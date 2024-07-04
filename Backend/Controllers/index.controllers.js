@@ -140,42 +140,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json({ success: true, message: 'User deleted Successfully', user });
 });
 
-// assign_admin
-
-const assignAdminRole = asyncHandler(async (req, res) => {
-    const { userId, mainUsername, mainPassword } = req.body;
-
-    // Ensure only admins can assign admin roles
-    if (!req.user || !req.user.isAdmin) {
-        return res.status(403).json({ message: "You do not have permission to assign admin roles" });
-    }
-
-    // Verify main credentials
-    if (mainUsername !== process.env.MAIN_USERNAME || mainPassword !== process.env.MAIN_PASSWORD) {
-        return res.status(403).json({ message: "Invalid main credentials" });
-    }
-
-    try {
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        user.isAdmin = true;
-        await user.save();
-
-        res.status(200).json({ message: "User assigned as admin successfully", success: true });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Failed to assign admin role", success: false });
-    }
-});
-
 export {
     signupUser,
     signinUser,
     fetchUser,
     deleteUser,
-    assignAdminRole
 };

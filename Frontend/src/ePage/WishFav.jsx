@@ -1,26 +1,117 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
+import { useToastContext } from "@/context/ToastContext";
+import { jwtDecode } from "jwt-decode";
+
 const WishFav = () => {
-  const HOST = import.meta.env.VITE_BACKEND_HOST; // Assuming you have Vite configured for environment variables
-  const [favorites, setFavorites] = useState([]);
+  const HOST = import.meta.env.VITE_BACKEND_HOST;
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const showToast = useToastContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchWishlist = async () => {
+      const token = localStorage.getItem("AuthenticationToken");
+      if (!token) return;
+
       try {
-        const response = await axios.get(`${HOST}/api/v1/user/favorites`);
-        setFavorites(response.data);
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.user.id;
+        if (!userId) {
+          return;
+        }
+
+        const response = await axios.get(
+          `${HOST}/api/v1/user/favorites/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.wishlist) {
+          setWishlistItems(response.data.wishlist);
+        } else {
+          console.error("Empty items array in response:", response.data);
+        }
       } catch (error) {
-        console.error("Error fetching favorites", error);
+        console.error("Error fetching wishlist", error);
       }
     };
 
-    fetchFavorites();
+    fetchWishlist();
   }, []);
+
+  const removeFromWishlist = async (itemId) => {
+    const token = localStorage.getItem("AuthenticationToken");
+    if (!token) {
+      showToast({
+        title: "Please login to your account",
+        position: "bottom-right",
+      });
+      navigate("/login");
+      return;
+    }
+
+    if (!itemId) {
+      console.error("Missing itemId", {
+        itemId,
+      });
+      showToast({
+        title: "Failed to remove item from wishlist: Missing itemId",
+        position: "bottom-right",
+      });
+      return;
+    }
+
+    // Decode token to get user ID
+    let userID;
+    try {
+      const decodedToken = jwtDecode(token);
+      userID = decodedToken.user.id; // Access user ID inside user object
+      if (!userID) {
+        throw new Error("userID not found in token");
+      }
+    } catch (error) {
+      console.error("Error decoding token or userID not found", error);
+      showToast({
+        title: "Failed to add item to wishlist: Invalid token",
+        position: "bottom-right",
+        colorScheme: "red",
+      });
+      return;
+    }
+
+    try {
+      await axios.delete(`${HOST}/api/v1/user/wishlist/${userID}/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      showToast({
+        title: "Item removed from wishlist",
+        position: "bottom-right",
+        colorScheme: "red",
+      });
+
+      // Update the wishlist state after removing the item
+      setWishlistItems(wishlistItems.filter((item) => item.productId !== itemId));
+    } catch (error) {
+      console.error("Error removing item from wishlist", error);
+      showToast({
+        title: "Failed to remove item from wishlist",
+        position: "bottom-right",
+        colorScheme: "red",
+      });
+    }
+  };
 
   return (
     <div className="container my-20">
-      {favorites.length === 0 ? (
+      {wishlistItems.length === 0 ? (
         <div className="flex justify-around">
           <div className="flex flex-col items-center">
             <span className="flex justify-center items-center h-32 w-32 bg-green-100 rounded-full my-10">
@@ -57,26 +148,43 @@ const WishFav = () => {
           </div>
         </div>
       ) : (
-        <div className="wishlist-items grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {favorites.map((item, index) => (
-            <div key={index} className="wishlist-item">
-              <div className="wishlist-item__pic set-bg">
-                <img
-                  src={item.src}
-                  className="h-full w-full select-none"
-                  alt={item.description}
-                />
-              </div>
-              <div className="wishlist-item__details p-4">
-                <h2 className="text-xl font-bold">{item.description}</h2>
-                <p className="text-lg">{item.price}</p>
-                <Link to="/" className="btn btn-primary mt-4">
-                  View Details
-                </Link>
-              </div>
+        <>
+          <div className="container mx-auto">
+            <h1 className="text-2xl font-bold mb-4">Wishlist</h1>
+            <div className="grid grid-cols-1 gap-2">
+              {wishlistItems.map((item) => (
+                <div key={item._id} className="bg-white rounded-md p-4">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="removeItem me-3 cursor-pointer">
+                        <X onClick={() => removeFromWishlist(item.productId)} />
+                      </div>
+                      <img
+                        src={item.image}
+                        alt={item.description}
+                        className="w-28 h-28 rounded-md object-cover"
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-lg font-bold">{item.description}</h2>
+                        <p className="text-gray-500">Color: Random</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-bold text-lg">${item.Price}</p>
+                      <Link
+                        to="#"
+                        className="rounded-md ms-3 px-6 py-1.5 font-semibold leading-7 mainButtonCSS"
+                      >
+                        Add to Cart
+                      </Link>
+                    </div>
+                  </div>
+                  <hr className="mt-3" />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );

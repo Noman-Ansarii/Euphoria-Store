@@ -1,8 +1,7 @@
 import { Router } from 'express'; // Import express
-import { signupUser, signinUser, fetchUser, deleteUser, assignAdminRole } from '../Controllers/index.controllers.js'; // Import the signupUser controller function
-import { addWishlistItem, getWishisItem } from '../Controllers/Data.Controller.js'
+import { signupUser, signinUser, fetchUser, deleteUser } from '../Controllers/index.controllers.js'; // Import the signupUser controller function
 import middleware from '../Middleware/fetchUser.middleware.js';
-import { addProducttoMongoDB } from '../Controllers/Product.controller.js';
+import { addToCart, addToWishlist, getCartList, getWishlist, removeFromCartList, removeFromWishlist } from '../Controllers/Data.Controller.js';
 
 const router = Router(); // Initialize the router
 
@@ -18,10 +17,15 @@ router.route('/pr0f1l3/:id').get(middleware, fetchUser);
 // Define the /Delete User route
 router.route('/d3l3t3/:id').delete(middleware, deleteUser);
 
-router.route('/add-product').post(middleware, addProducttoMongoDB);
+// WishlistItem ROUTE
+router.route('/favorites/:userId').get(getWishlist);
+router.route('/wishlist/:userId').post(addToWishlist);
+router.route('/wishlist/:userId/:productId').delete(removeFromWishlist);
 
-router.route('/wishlist').post(middleware, addWishlistItem);
+// CartlistItem ROUTE
+router.route('/cartitem/:userId').get(getCartList);
+router.route('/cartlist/:userId').post(addToCart);
+router.route('/cartitem/:userId/:productId').delete(removeFromCartList);
 
-router.route('/favorites').get(middleware, getWishisItem);
 
 export default router; // Export the router

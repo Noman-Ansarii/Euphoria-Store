@@ -1,21 +1,17 @@
-// models/Product.js
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const ProductSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+    imageSrc: String,
+    description: String,
+    Price: String,
+    about: String,
+    category: {
+        type: String,
+        enum: ['SliderProduct', 'MenProducts', 'WomenProducts', 'LimeCart'],
         required: true
-    },
-    product: [
-        {
-            description: String,
-            price: String,
-            image: String
-        }
-    ]
-});
+    }
+}, { timestamps: true });
 
 const Product = mongoose.model('Product', ProductSchema);
 

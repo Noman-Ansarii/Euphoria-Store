@@ -9,13 +9,13 @@ export const useToastContext = () => useContext(ToastContext);
 export const ToastProvider = ({ children }) => {
   const toast = useToast();
 
-  const showToast = ({ title, position }) => {
+  const showToast = ({ title, position, colorScheme }) => {
     toast({
       title,
       position,
       duration: 2000, // Adjust duration as needed
       isClosable: true,
-      colorScheme: 'purple',
+      colorScheme,
     });
   };
 

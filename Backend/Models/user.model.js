@@ -18,7 +18,22 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    role: { type: String, enum: ['user', 'admin'], default: 'user' } // Add role field
+    wishlist: [
+        {
+            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+            description: { type: String, required: true },
+            Price: { type: String, required: true },
+            image: { type: String, required: true }
+        }
+    ],
+    cartlist: [
+        {
+            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+            description: { type: String, required: true },
+            Price: { type: String, required: true },
+            image: { type: String, required: true }
+        }
+    ]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

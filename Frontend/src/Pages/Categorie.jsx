@@ -1,40 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
-
-import Shirt1 from "../media/MenCate/1.png";
-import Shirt2 from "../media/MenCate/2.png";
-import Shirt3 from "../media/MenCate/3.png";
-import Shirt4 from "../media/MenCate/4.png";
-import Shirt5 from "../media/MenCate/5.png";
-import Shirt6 from "../media/MenCate/6.png";
-import Shirt7 from "../media/MenCate/7.png";
-import Shirt8 from "../media/MenCate/8.png";
-
-import women1 from "../media/WomenCate/1.png";
-import women2 from "../media/WomenCate/2.png";
-import women3 from "../media/WomenCate/3.png";
-import women4 from "../media/WomenCate/4.png";
 import { Link } from "react-router-dom";
-
-const men = [
-  { src: Shirt1, description: "Shirts" },
-  { src: Shirt2, description: "Hoodies & Sweetshirt" },
-  { src: Shirt3, description: "Printed T-Shirts" },
-  { src: Shirt4, description: "Jeans" },
-  { src: Shirt5, description: "Activewear" },
-  { src: Shirt6, description: "Boxers" },
-  { src: Shirt7, description: "Polo T-Shirt" },
-  { src: Shirt8, description: "Plain T-Shirt" },
-];
-
-const women = [
-  { src: women1, description: "Boxers" },
-  { src: women2, description: "Hoodies & Sweetshirt" },
-  { src: women3, description: "Coats & Parkas" },
-  { src: women4, description: "Tees & T-Shirt" },
-];
+import axios from "axios";
+import { useWishlist } from "@/context/WishlistContext";
 
 function Categorie() {
+  const HOST = import.meta.env.VITE_BACKEND_HOST;
+
+  const [menProduct, setMenProduct] = useState([]);
+  const [womenProduct, setWomenProduct] = useState([]);
+  const { addToWishlist, removeFromWishlist } = useWishlist(); // Use useWishlist hook to access wishlist functions
+
+  useEffect(() => {
+    const fetchMenProducts = async () => {
+      try {
+        const response = await axios.get(`${HOST}/api/v2/product/menProducts`);
+        setMenProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching Men products", error);
+      }
+    };
+
+    fetchMenProducts();
+  }, []); // Empty dependency array to run once on component mount
+
+  useEffect(() => {
+    const fetchWomenProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${HOST}/api/v2/product/womenProducts`
+        );
+        setWomenProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching Women products", error);
+      }
+    };
+
+    fetchWomenProducts();
+  }, []); // Empty dependency array to run once on component mount
+
+  const handleCheckboxChange = (e, item) => {
+    if (e.target.checked) {
+      addToWishlist(item); // Call addToWishlist from context
+    } else {
+      removeFromWishlist(item._id); // Call removeFromWishlist from context
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -45,12 +57,31 @@ function Categorie() {
           </h1>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-28">
-          {men.map((cate, i) => (
-            <div key={i} className="w-full h-[450px]">
+          {menProduct.map((cate, i) => (
+            <div key={i} className="relative w-full h-[450px]">
               <img
-                src={cate.src}
+                src={cate.imageSrc}
                 className="h-full w-full rounded-lg object-cover"
               />
+              <div className="absolute top-4 right-4">
+                <label className="containerLastForOtherProducts">
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleCheckboxChange(e, cate)} // Pass cate instead of item
+                  />
+                  <div className="checkmark">
+                    <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="256" width="256"></rect>
+                      <path
+                        d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                        strokeWidth="20px"
+                        stroke="#FFF"
+                        fill="none"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+              </div>
               <div className="p-4 flex justify-between items-center">
                 <div className="okay">
                   <h1 className="text-lg font-semibold">{cate.description}</h1>
@@ -76,12 +107,31 @@ function Categorie() {
           </h1>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-28">
-          {women.map((cate, i) => (
-            <div key={i} className="w-full h-[450px]">
+          {womenProduct.map((cate, i) => (
+            <div key={i} className="relative w-full h-[450px]">
               <img
-                src={cate.src}
+                src={cate.imageSrc}
                 className="h-full w-full rounded-lg object-cover"
               />
+              <div className="absolute top-4 right-4">
+                <label className="containerLastForOtherProducts">
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleCheckboxChange(e, cate)} // Pass cate instead of item
+                  />
+                  <div className="checkmark">
+                    <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="256" width="256"></rect>
+                      <path
+                        d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                        strokeWidth="20px"
+                        stroke="#FFF"
+                        fill="none"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+              </div>
               <div className="p-4 flex justify-between items-center">
                 <div className="okay">
                   <h1 className="text-lg font-semibold">{cate.description}</h1>

@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ToastProvider } from "./context/ToastContext.jsx";
+import { WishlistProvider } from "./context/WishlistContext.jsx";
+import { CartListProvider } from "./context/CartListContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 
@@ -20,7 +22,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ChakraProvider theme={theme}>
       <ToastProvider>
         <Router>
-          <App />
+          <CartListProvider>
+            <WishlistProvider>
+              <App />
+            </WishlistProvider>
+          </CartListProvider>
         </Router>
       </ToastProvider>
     </ChakraProvider>

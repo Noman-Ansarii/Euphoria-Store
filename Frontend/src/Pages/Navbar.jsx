@@ -35,7 +35,7 @@ function Navbar(props) {
 
   const handleSignout = () => {
     localStorage.removeItem("AuthenticationToken");
-    navigate("/login");
+    navigate("/");
     props.PopUpAlert("Signout Successfully", "success");
   };
 
