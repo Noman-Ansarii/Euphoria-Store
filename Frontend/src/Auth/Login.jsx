@@ -106,6 +106,7 @@ function SignIn(props) {
                       id="email"
                       placeholder="user@example.com"
                       onChange={handleChange}
+                      autoComplete="on"
                     ></input>
                   </div>
                 </div>
@@ -134,7 +135,7 @@ function SignIn(props) {
                       name="password"
                       placeholder="Password"
                       id="password"
-                      autoComplete="new-password"
+                      autoComplete="Off"
                       onChange={handleChange}
                     />
                     {passwordVisible ? (
@@ -149,13 +150,13 @@ function SignIn(props) {
                       />
                     )}
                   </div>
-                  </div>
-                  <div className="relative h-2">
-                    {backendErrorFetcher && (
-                      <div className="absolute -mt-3 w-full text-red-500 text-sm font-medium transition-opacity duration-300 opacity-100">
-                        {backendErrorFetcher}
-                      </div>
-                    )}
+                </div>
+                <div className="relative h-2">
+                  {backendErrorFetcher && (
+                    <div className="absolute -mt-3 w-full text-red-500 text-sm font-medium transition-opacity duration-300 opacity-100">
+                      {backendErrorFetcher}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <button

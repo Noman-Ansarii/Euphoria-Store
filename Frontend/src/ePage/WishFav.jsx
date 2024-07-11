@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useToastContext } from "@/context/ToastContext";
 import { jwtDecode } from "jwt-decode";
+import { useCartlist } from "@/context/CartListContext";
 
 const WishFav = () => {
   const HOST = import.meta.env.VITE_BACKEND_HOST;
   const [wishlistItems, setWishlistItems] = useState([]);
   const showToast = useToastContext();
   const navigate = useNavigate();
+  const { addToCart } = useCartlist(); // Use useWishlist hook to access wishlist functions
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -98,7 +100,9 @@ const WishFav = () => {
       });
 
       // Update the wishlist state after removing the item
-      setWishlistItems(wishlistItems.filter((item) => item.productId !== itemId));
+      setWishlistItems(
+        wishlistItems.filter((item) => item.productId !== itemId)
+      );
     } catch (error) {
       console.error("Error removing item from wishlist", error);
       showToast({
@@ -109,6 +113,17 @@ const WishFav = () => {
     }
   };
 
+  // ADDTOCART
+
+  const handleAddtoCart = (item) => {
+    const itemToAdd = {
+      _id: item._id,
+      description: item.description,
+      Price: item.Price,
+      imageSrc: item.image, // Ensure the image is correctly mapped to imageSrc
+    };
+    addToCart(itemToAdd); // Call addToCart from context with the correct item object
+  };
   return (
     <div className="container my-20">
       {wishlistItems.length === 0 ? (
@@ -165,14 +180,16 @@ const WishFav = () => {
                         className="w-28 h-28 rounded-md object-cover"
                       />
                       <div className="ml-4">
-                        <h2 className="text-lg font-bold">{item.description}</h2>
-                        <p className="text-gray-500">Color: Random</p>
+                        <h2 className="text-lg font-bold">
+                          {item.description}
+                        </h2>
+                        <p className="text-gray-500">Colour: Random</p>
                       </div>
                     </div>
                     <div className="flex items-center">
                       <p className="font-bold text-lg">${item.Price}</p>
                       <Link
-                        to="#"
+                        onClick={() => handleAddtoCart(item)}
                         className="rounded-md ms-3 px-6 py-1.5 font-semibold leading-7 mainButtonCSS"
                       >
                         Add to Cart

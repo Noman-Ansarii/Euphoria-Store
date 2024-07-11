@@ -4,6 +4,11 @@ import ApiError from '../Utils/ApiError.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import Email from '../Utils/Email.js'; // Assuming you have a utility function to send emails
+import { ResetToken } from '../Models/ResetToken.model.js';
+import { Order } from '../Models/Order.model.js'
+import sendOrderConfirmationEmail from '../Utils/senEmailConfirmation.js';
 
 /*---------------------
   Sign Up
@@ -108,7 +113,6 @@ const signinUser = asyncHandler(async (req, res) => {
 // FetchUser data
 
 const fetchUser = asyncHandler(async (req, res) => {
-
     const userID = req.user && req.user.id ? req.user.id : req.params.id;
 
     try {
@@ -140,9 +144,158 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json({ success: true, message: 'User deleted Successfully', user });
 });
 
+/*---------------------
+  Forgot Password
+----------------------*/
+
+const forgotPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ success: false, msg: "Email doesn't exist" });
+    }
+
+    // Generate a reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    // Save the token and user's email to the database
+    await ResetToken.findOneAndUpdate(
+        { email },
+        { userId: user._id, token: resetToken, email: email },
+        { upsert: true }
+    );
+
+    // Create the reset URL
+    const resetURL = `http://localhost:5173/r353t9455/${user._id}/${resetToken}`;
+
+    // Send the reset link via email
+    await Email(user.username, email, resetURL);
+
+    res.status(200).json({ success: true, msg: "Reset link sent to email" });
+});
+
+/*---------------------
+  Reset Password
+-----------------------*/
+const resetPassword = asyncHandler(async (req, res) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    // Validate newPassword
+
+    const resetToken = await ResetToken.findOne({ token });
+
+    if (!resetToken) {
+        return res.status(400).json({ success: false, msg: 'Invalid or expired token' });
+    }
+
+    // Check click count
+    if (resetToken.clicks >= resetToken.maxClicks) {
+        await resetToken.delete();
+        return res.status(400).json({ success: false, msg: 'Token has been clicked too many times' });
+    }
+
+    // Increment click count
+    resetToken.clicks += 1;
+    await resetToken.save();
+
+    // Find user by userId instead of email
+    const user = await User.findById(resetToken.userId);
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    await user.save();
+
+    // Remove the token after successful password reset
+    await resetToken.deleteOne();
+
+    res.status(200).json({ success: true, msg: 'Password reset successfully' });
+});
+
+/*---------------------
+  CheckOut Order
+-----------------------*/
+
+const saveCheckoutData = async (req, res) => {
+    try {
+        const { billingDetails, shippingDetails, paymentMethod, cartlist, subtotal, shipping, discount, total } = req.body;
+
+        // Validate payload
+        if (!billingDetails || !shippingDetails || !paymentMethod || !cartlist || !subtotal || !shipping || !discount || !total) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+
+        // Assuming userId is available in req.params.userId
+        const userId = req.params.userId;
+        
+        // Fetch user details
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        const email = user.email;
+        const username = user.username;
+
+        // Create the order
+        const order = new Order({
+            userId: userId,
+            billingDetails,
+            shippingDetails,
+            paymentMethod,
+            cartlist,
+            subtotal: parseFloat(subtotal),
+            shipping: parseFloat(shipping),
+            discount: parseFloat(discount),
+            total: parseFloat(total),
+        });
+
+        // Save order to database
+        await order.save();
+
+        // Send order confirmation email
+        await sendOrderConfirmationEmail(email, username, order);
+
+        // Respond with success
+        res.status(201).json({ message: "Checkout successful" });
+    } catch (error) {
+        console.error("Error during checkout:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+// Get Order for a user
+
+const getMyOrders = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        // Verify the user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Find all orders associated with the user
+        const orders = await Order.find({ userId });
+
+        res.json({ orders });
+    } catch (error) {
+        console.error("Error fetching orders", error);
+        res.status(500).json({ error: "Failed to fetch orders" });
+    }
+};
+
 export {
     signupUser,
     signinUser,
     fetchUser,
     deleteUser,
+    forgotPassword,
+    resetPassword,
+    saveCheckoutData,
+    getMyOrders
 };

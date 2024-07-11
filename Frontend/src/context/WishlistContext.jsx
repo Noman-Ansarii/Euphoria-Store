@@ -28,6 +28,19 @@ export const WishlistProvider = ({ children }) => {
       return;
     }
 
+     // Check if the item already exists in the cartlist
+     const existingItem = wishlistItems.find(
+      (wishItem) => wishItem._id === item._id
+    );
+    if (existingItem) {
+      showToast({
+        title: "Item already exists in WishList",
+        position: "bottom-right",
+        colorScheme: "yellow",
+      });
+      return;
+    }
+
     const { _id, description, Price, imageSrc } = item;
     if (!_id || !description || !Price || !imageSrc) {
       console.error("Missing fields in the item object", {

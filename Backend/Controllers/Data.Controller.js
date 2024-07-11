@@ -155,6 +155,7 @@ const getCartList = async (req, res) => {
     }
 };
 
+
 export {
     addToWishlist,
     getWishlist,
@@ -162,5 +163,4 @@ export {
     addToCart,
     getCartList,
     removeFromCartList,
- 
 };

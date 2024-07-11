@@ -843,3 +843,11 @@ th{
 .slider {
   transition: 300ms ease;
 }
+
+.checkout input{
+  background: var(--color) !important;
+}
+
+.mainCheckout{
+  background: var(--color);
+}

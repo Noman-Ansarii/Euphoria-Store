@@ -218,7 +218,7 @@ function Cart() {
                 />
                 <div className="ml-4">
                   <p className="font-medium">{item.description}</p>
-                  <p className="text-gray-500">Color: {item.color || "Random"}</p>
+                  <p className="text-gray-500">Colour: {item.color || "Random"}</p>
                   <p className="text-gray-500">Size: {item.size || "Default"}</p>
                 </div>
               </div>
@@ -314,9 +314,9 @@ function Cart() {
                   </p>
                 </div>
                 <hr />
-                <button className="w-full px-4 py-2 mt-4 rounded-md transition duration-300 mainButtonCSS">
+                <Link to="/checkout" className="block w-full px-4 py-2 mt-4 rounded-md transition duration-300 mainButtonCSS">
                   Proceed To Checkout
-                </button>
+                </Link>
               </div>
             </div>
           </main>

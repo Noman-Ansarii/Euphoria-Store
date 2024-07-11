@@ -6,7 +6,6 @@ import Navbar from "./Pages/Navbar.jsx";
 import SignIn from "./Auth/Login.jsx";
 import ForgetPassword from "./Auth/ForgetPassword.jsx";
 import ResetPassword from "./Auth/ResetPassword.jsx";
-import EmailCheck from "./Auth/EmailCheck.jsx";
 import Cart from "./ePage/Cart.jsx";
 import Profile from "./Pages/Profile.jsx";
 import Alert from "./MyComponents/Alert.jsx";
@@ -15,6 +14,9 @@ import Footer from "./Pages/Footer.jsx";
 import Loader from ".//MyComponents/Loader.jsx"; // Import the Loader component
 import AssignAdmin from "./Auth/AssignAdmin.jsx";
 import NotFound from "./Pages/NotFound.jsx";
+import Checkout from "./ePage/Checkout.jsx";
+import MyOrders from "./ePage/MyOrder.jsx";
+import OrderConfirm from "./Pages/OrderConfirm.jsx";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -29,7 +31,7 @@ function App() {
     });
     setTimeout(() => {
       setAlert(null);
-    }, 2000);
+    }, 4000);
   };
 
   useEffect(() => {
@@ -74,9 +76,8 @@ function App() {
           path="/assign-admin"
           element={<AssignAdmin PopUpAlert={PopUpAlert} />}
         />
-        <Route exact path="/f0rg3tp455" element={<ForgetPassword />} />
-        <Route exact path="/r353t9455" element={<ResetPassword />} />
-        <Route exact path="/3m417ch3ck" element={<EmailCheck />} />
+        <Route exact path="/f0rg3tp455" element={<ForgetPassword PopUpAlert={PopUpAlert} />} />
+        <Route exact path="/r353t9455/:userId/:token" element={<ResetPassword PopUpAlert={PopUpAlert}/>} />
         <Route exact path="*" element={<NotFound />} />
 
         {Authentication ? (
@@ -84,9 +85,12 @@ function App() {
           <Route exact path="/c4r7" element={<Cart />} />
           <Route exact path="/pr0f1l3" element={<Profile />} />
           <Route exact path="/w15h715t" element={<WishFav />} />
+          <Route exact path="/checkout" element={<Checkout PopUpAlert={PopUpAlert}/>} />
+          <Route exact path="/orderconfirm" element={<OrderConfirm PopUpAlert={PopUpAlert}/>} />
+          <Route exact path="/orders" element={<MyOrders />} />
           </>
         ) : (
-          <Route path="*" element={<SignIn PopUpAlert={PopUpAlert} setLoading={setLoading} />} />
+          <Route path="/login" element={<SignIn PopUpAlert={PopUpAlert} setLoading={setLoading} />} />
         )}
       </Routes>
       <Footer />

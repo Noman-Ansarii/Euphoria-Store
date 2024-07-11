@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -17,13 +18,24 @@ import {
 } from "@heroicons/react/24/outline";
 import EUP from "../assets/Euphoria.png";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+  Button,
+} from "@chakra-ui/react";
 
 const navigation = [
-  { name: "Shop", href: "#", current: true },
-  { name: "Men", href: "#", current: false },
-  { name: "Women", href: "#", current: false },
-  { name: "Combos", href: "#", current: false },
-  { name: "Joggers", href: "#", current: false },
+  { name: "Shop", to: "/", current: true },
+  { name: "Men", to: "/", current: false },
+  { name: "Women", to: "/", current: false },
+  { name: "Combos", to: "/", current: false },
+  { name: "Joggers", to: "/", current: false },
 ];
 
 function classNames(...classes) {
@@ -31,12 +43,15 @@ function classNames(...classes) {
 }
 
 function Navbar(props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
   const navigate = useNavigate();
 
   const handleSignout = () => {
     localStorage.removeItem("AuthenticationToken");
-    navigate("/");
-    props.PopUpAlert("Signout Successfully", "success");
+    onClose(); // Close the modal
+    navigate("/login");
+    props.PopUpAlert("Signut successfully", "success");
   };
 
   return (
@@ -66,7 +81,7 @@ function Navbar(props) {
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
-                      to={item.href}
+                      to={item.to}
                       className={classNames(
                         item.current
                           ? "text-[#3C4242] font-bold"
@@ -98,7 +113,7 @@ function Navbar(props) {
                         <HeartIcon className="icons h-8 w-8 sm:h-10 sm:w-10 p-2 rounded-lg cursor-pointer text-gray-500" />
                       </Link>
                       <Link to="/c4r7">
-                      <ShoppingCartIcon className="icons h-8 w-8 sm:h-10 sm:w-10 p-2 rounded-lg cursor-pointer text-gray-500" />
+                        <ShoppingCartIcon className="icons h-8 w-8 sm:h-10 sm:w-10 p-2 rounded-lg cursor-pointer text-gray-500" />
                       </Link>
                     </div>
                     <Menu as="div" className="relative ml-3">
@@ -136,13 +151,13 @@ function Navbar(props) {
                           <MenuItem>
                             {({ focus }) => (
                               <Link
-                                to="/settings"
+                                to="/orders"
                                 className={classNames(
                                   focus ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
+                                My Orders
                               </Link>
                             )}
                           </MenuItem>
@@ -153,9 +168,7 @@ function Navbar(props) {
                                   focus ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
-                                onClick={() => {
-                                  handleSignout();
-                                }}
+                                onClick={onOpen}
                               >
                                 Sign out
                               </Link>
@@ -186,6 +199,39 @@ function Navbar(props) {
               )}
             </div>
           </div>
+          <>
+            <AlertDialog
+              motionPreset="slideInBottom"
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isOpen={isOpen}
+              isCentered
+            >
+              <AlertDialogOverlay />
+
+              <AlertDialogContent>
+                <AlertDialogHeader>Are you Sure?</AlertDialogHeader>
+                <AlertDialogCloseButton />
+                <AlertDialogBody>
+                  Are you sure you want to Signout your account?.
+                </AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onClose}>
+                    No
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    ml={3}
+                    onClick={() => {
+                      handleSignout();
+                    }}
+                  >
+                    Yes
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
 
           <DisclosurePanel className="lg:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
@@ -193,7 +239,7 @@ function Navbar(props) {
                 <DisclosureButton
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "text-[#3C4242] font-bold"

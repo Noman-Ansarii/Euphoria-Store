@@ -250,7 +250,7 @@ function Profile({ Alerts, setLoading }) {
       </div>
       <button
         onClick={() => setOpen(true)}
-        className="mt-4 w-full h-12 text-center rounded-md bg-black text-sm font-semibold text-white shadow-sm hover:bg-red-600/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+        className="mt-4 w-full h-12 text-center rounded-md bg-purple-700 text-sm font-semibold text-white shadow-sm hover:bg-purple-900-600/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
       >
         Delete this account
       </button>

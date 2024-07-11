@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { useToastContext } from "../context/ToastContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Ensure correct import statement
+import { jwtDecode } from "jwt-decode";
 
 const CartListContext = createContext();
 
@@ -25,6 +25,19 @@ export const CartListProvider = ({ children }) => {
         position: "bottom-right",
       });
       navigate("/login");
+      return;
+    }
+
+    // Check if the item already exists in the cartlist
+    const existingItem = cartlistItems.find(
+      (cartItem) => cartItem._id === item._id
+    );
+    if (existingItem) {
+      showToast({
+        title: "Item already exists in cart",
+        position: "bottom-right",
+        colorScheme: "yellow",
+      });
       return;
     }
 
@@ -166,6 +179,7 @@ export const CartListProvider = ({ children }) => {
   return (
     <CartListContext.Provider
       value={{
+        cartlistItems,
         addToCart,
         removeFromCartlist,
       }}

@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import IMG1 from "../media/authPage/fp.png";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function ForgetPassword() {
+function ForgetPassword(props) {
+  const HOST = import.meta.env.VITE_BACKEND_HOST; // Assuming you're using Vite for environment variables
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const handleForgetPassword = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${HOST}/api/v1/user/forgot-password`, {
+        email,
+      });
+      if (response.data.success) {
+        props.PopUpAlert(
+          "Check your email reset password link send successfully",
+          "success"
+        ); // Display error message from API response
+        navigate("/login"); // Navigate to verification page if request succeeds
+      } else {
+        props.PopUpAlert(
+          "Check your email reset password link send successfully", "error",
+          response.data.msg
+        ); // Display error message from API response
+      }
+    } catch (error) {
+      console.error("Error sending reset code: ", error);
+      props.PopUpAlert(
+        error.response.data.msg ||
+          "Failed to send reset code. Please try again later.", "error"
+      );
+    }
+  };
+
   return (
     <>
       <section>
@@ -19,18 +52,14 @@ function ForgetPassword() {
               <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">
                 Enter Email!
               </h2>
-              <form
-                // onSubmit={handleSubmit}
-                className="mt-8"
-              >
+              <form className="mt-8" onSubmit={handleForgetPassword}>
                 <div className="space-y-5">
                   <div>
                     <label
-                      htmlFor=""
+                      htmlFor="email"
                       className="text-base font-medium text-gray-900"
                     >
-                      {" "}
-                      Email address{" "}
+                      Email address
                     </label>
                     <div className="mt-2">
                       <input
@@ -40,8 +69,9 @@ function ForgetPassword() {
                         name="email"
                         id="email"
                         placeholder="Email"
-                        // onChange={handleChange}
-                      ></input>
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div>
